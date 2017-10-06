@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Higher/Lower</title>
+</head>
+<body>
+<p>The goal of this game is to guess the number the computer will generate in the range and tries you specify yourself. Good luck!</p>
+<div id="game-intro-wrapper">
+    <input type="text" placeholder="Pick your minimum value" required id="min-val"/>
+    <input type="text" placeholder="Pick your maximum value" required id="max-val"/>
+    <input type="text" placeholder="Pick your number of tries" required id="tries"/>
+    <button id="start-game">Let's start!</button>
+</div>
+<div id="game-wrapper">
+    <div id="game-message">Higher? Lower? I don't know yet!</div>
+    <input type="text" placeholder="Take a guess of the number!" id="number-pick"/>
+    <button id="confirm-number">Guess!</button>
+    <button id="reset-game">Reset</button>
+</div>
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
