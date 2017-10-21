@@ -1,3 +1,5 @@
+console.log(`Temperature converter made by falbor45 (https://github.com/falbor45)`)
+
 let getSel1 = document.getElementById('select1')
 let getSel2 = document.getElementById('select2')
 let selectQuant = document.getElementById('quantity')
