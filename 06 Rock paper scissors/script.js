@@ -1,7 +1,10 @@
 {
   console.log(`Rock, paper, scissors, lizard, Spock made by falbor45 (https://github.com/falbor45)`)
+
   let p1 = 0
   let p2 = 0
+  let buttonsSel = document.querySelectorAll("body div button")
+
   let battle = (pChoice) => {
     let choices = {
       rock : {defeats: ["scissors","lizard"]},
@@ -32,9 +35,7 @@
     return null
   }
 
-  document.getElementById("rock").onclick = () => battle(document.getElementById("rock").id)
-  document.getElementById("paper").onclick = () => battle(document.getElementById("paper").id)
-  document.getElementById("scissors").onclick = () => battle(document.getElementById("scissors").id)
-  document.getElementById("lizard").onclick = () => battle(document.getElementById("lizard").id)
-  document.getElementById("spock").onclick = () => battle(document.getElementById("spock").id)
+  for (let i = 0; i < buttonsSel.length; i++) {
+    buttonsSel[i].onclick = () => battle(buttonsSel[i].id)
+  }
 }
