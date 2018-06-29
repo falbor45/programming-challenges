@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI calculator</title>
+</head>
+<body>
+<h2 id="result"></h2>
+<form action="">
+  <label for="measurement">Measurement</label>
+  <select name="measurement" id="measurement">
+    <option value="metric" selected>Metric</option>
+    <option value="imperial">Imperial</option>
+  </select>
+  <div>
+  <label for="weight">Weight</label>
+  <input id="weight" name="weight" type="text"/>
+  <span id="weightSuffix">kilograms</span>
+  </div>
+  <div>
+  <label for="height">Height</label>
+  <input id="height" name="height" type="text"/>
+    <span id="heightSuffix">meters</span>
+  </div>
+  <button id="calculate">Calculate BMI</button>
+</form>
+<script src="script.js"></script>
+</body>
+</html>
