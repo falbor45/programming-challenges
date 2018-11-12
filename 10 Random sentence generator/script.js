@@ -1,4 +1,6 @@
 {
+  console.log(`Random sentence generator made by falbor45 (https://github.com/falbor45)`)
+
   const randomizeStrLength = (perc, string) => {
     "use strict";
     let rand = Math.random();

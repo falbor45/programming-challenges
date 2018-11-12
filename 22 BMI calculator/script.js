@@ -1,4 +1,6 @@
 {
+  console.log(`BMI calculator made by falbor45 (https://github.com/falbor45)`)
+
   let measurement = 'metric';
 
   for (let i = 0; i < document.querySelectorAll('input').length; i++) {
