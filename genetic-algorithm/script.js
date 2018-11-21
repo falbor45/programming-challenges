@@ -34,7 +34,7 @@
     canvas.context.fillRect(CONFIG_TARGET_POINT.x, CONFIG_TARGET_POINT.y, 10, 10)
     for (let i = 0; i < population.population.length; i++) {
       population.population[i].move();
-      canvas.context.fillStyle = population.population[i].color;
+      canvas.context.fillStyle = `rgb(${population.population[i].genes.color.r} ${population.population[i].genes.color.g} ${population.population[i].genes.color.b})`;
       canvas.context.fillRect(population.population[i].position.x, population.population[i].position.y, population.population[i].size, population.population[i].size)
     }
     document.getElementById('generation').innerText = `Generation: ${population.generation}`;
