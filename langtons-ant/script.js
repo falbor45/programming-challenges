@@ -1,6 +1,8 @@
 {
-	const MAP_SIZE = 1250;
+	const MAP_SIZE = 800;
 	const GRID_SIZE = 1;
+	const MAX_STEP_AMOUNT = 10000;
+	let ANTS = 0;
 
 	const randomRGB = () => {
 		const r = Math.floor(Math.random() * 255);
@@ -10,15 +12,14 @@
 		return `rgb(${r}, ${g}, ${b})`;
 	};
 
+	const generateColors = amount => new Array(amount).fill(null).map(_ => ({
+		color: randomRGB(),
+		step: Math.random() > 0.5 ? 'r' : 'l'
+	}));
+
 	const COLORS = [
 		{color: '#000000', step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'},
-		{color: randomRGB(), step: Math.random() > 0.5 ? 'r' : 'l'}
+		...generateColors(123)
 	];
 
 	console.log(COLORS);
@@ -47,6 +48,7 @@
 	const Ant = (initialPosition) => {
 		const position = initialPosition || [MAP_SIZE / 2, MAP_SIZE / 2];
 		let direction = 'up';
+		ANTS++;
 
 		return {
 			position,
@@ -81,22 +83,21 @@
 
 	const MAP = Array(MAP_SIZE).fill(1).map(item => Array(MAP_SIZE).fill(COLORS[0]));
 
-
-	const myAnt = Ant([~~(MAP_SIZE / 3) * 2, ~~(MAP_SIZE / 3) * 2]);
-
-	const myAnt2 = Ant([~~(MAP_SIZE / 3), ~~(MAP_SIZE / 3)]);
-
 	const drawPixel = (x, y, color) => {
 		context.fillStyle = color;
 		context.fillRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
 	};
 
-	const rec = (ant, stepCount, stepAmount, endOnStep) => {
-		for (let i = 0; i < stepAmount; i++) {
+	const rec = (ant, stepCount, stepAmount, endOnStep, lifespan) => {
+		if (lifespan === 0) {
+			return;
+		}
+		const _stepAmount = (ANTS * stepAmount > MAX_STEP_AMOUNT ? MAX_STEP_AMOUNT / ANTS : stepAmount)
+		for (let i = 0; i < _stepAmount; i++) {
 			const canMove = MAP[ant.position[0]] && MAP[ant.position[0]][ant.position[1]];
 			if (!canMove) {
-				rec(Ant([~~(Math.random() * MAP_SIZE), ~~(Math.random() * MAP_SIZE)]), stepCount, Math.ceil(stepAmount / 2), endOnStep);
-				rec(Ant([~~(Math.random() * MAP_SIZE), ~~(Math.random() * MAP_SIZE)]), stepCount, Math.ceil(stepAmount / 2), endOnStep);
+				ANTS--;
+				document.querySelector('span').innerText = `Ants on screen: ${ANTS}`;
 				return;
 			}
 			let currentMapPosition = MAP[ant.position[0]][ant.position[1]];
@@ -132,12 +133,14 @@
 			return true;
 		}
 
-		document.querySelector('span').innerText = stepCount;
+		document.querySelector('span').innerText = `Ants on screen: ${ANTS}`;
 
-		window.requestAnimationFrame(() => rec(ant, stepCount + stepAmount, stepAmount, endOnStep));
+		window.requestAnimationFrame(() => rec(ant, stepCount + stepAmount, stepAmount, endOnStep, lifespan ? lifespan - 1 : undefined));
 	};
 
-	rec(myAnt, 0, 5000, Number.MAX_SAFE_INTEGER);
+	canvas.addEventListener('mouseup', event => {
+		const ant = Ant([Math.round(event.offsetX / GRID_SIZE), Math.round(event.offsetY / GRID_SIZE)]);
 
-	rec(myAnt2, 0, 5000, Number.MAX_SAFE_INTEGER);
+		rec(ant, 0, 1000, Number.MAX_SAFE_INTEGER);
+	})
 }
